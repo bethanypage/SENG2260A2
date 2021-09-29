@@ -1124,6 +1124,8 @@ MonoBehaviour:
   relatedArtObjects:
   - {fileID: 0}
   relatedArtLink: {fileID: 1790112293185627549, guid: 22fa2b5bcf500f6489a548736a446805, type: 3}
+  linkStartWidth: 0.5
+  linkEndWidth: 0.5
 --- !u!65 &6681993746190348809
 BoxCollider:
   m_ObjectHideFlags: 0

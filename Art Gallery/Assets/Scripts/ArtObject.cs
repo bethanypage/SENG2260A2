@@ -19,6 +19,8 @@ public class ArtObject : MonoBehaviour
     [SerializeField] GameObject[] relatedArtObjects;
     [SerializeField] GameObject relatedArtLink;
     bool showRelated;
+    [Range(0.01f, 1f)]
+    [SerializeField] float linkStartWidth = 1f, linkEndWidth = 1f;
     List<GameObject> artLinks = new List<GameObject>();
 
     private void Awake()
@@ -109,6 +111,8 @@ public class ArtObject : MonoBehaviour
 
             linkRenderer.SetPosition(0, transform.position);
             linkRenderer.SetPosition(1, relatedArtObjects[i].transform.position);
+            linkRenderer.startWidth = linkStartWidth;
+            linkRenderer.endWidth = linkEndWidth;
             artLinks.Add(link);
         }
     }
