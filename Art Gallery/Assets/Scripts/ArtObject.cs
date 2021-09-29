@@ -10,17 +10,29 @@ public class ArtObject : MonoBehaviour
     [SerializeField] Material hightlightedBorderMat;
 
     [Header("UI")]
-    [SerializeField] GameObject infoButton;
     [SerializeField] GameObject infoPanel;
+    [SerializeField] GameObject infoButton;
+    [SerializeField] GameObject relatedArtButton;
     bool showPanel;
+
+    [Header("Related Artkworks")]
+    [SerializeField] GameObject[] relatedArtObjects;
+    [SerializeField] GameObject relatedArtLink;
+    bool showRelated;
+    List<GameObject> artLinks = new List<GameObject>();
 
     private void Awake()
     {
-        infoButton.SetActive(false);
-        infoPanel.SetActive(false);
+        HideInfoButton();
+        HideInfoPanel();
+        HideRelatedArtButton();
+
         showPanel = infoPanel.activeSelf;
+        showRelated = relatedArtButton.activeSelf;
+
         artBorder.material = normalBorderMat;
     }
+
 
     #region InfoButton
     void ShowInfoButton()
@@ -45,15 +57,73 @@ public class ArtObject : MonoBehaviour
 
     public void ShowInfoPanel()
     {
+        showPanel = true;
         infoPanel.SetActive(true);
     }
 
     public void HideInfoPanel()
     {
+        showPanel = false;
         infoPanel.SetActive(false);
     }
     #endregion InfoPanel
 
+    #region RelatedArtButton
+    void ShowRelatedArtButton()
+    {
+        relatedArtButton.SetActive(true);
+    }
+
+    void HideRelatedArtButton()
+    {
+        relatedArtButton.SetActive(false);
+    }
+
+    #endregion RelatedArtButton
+
+    #region RelatedArt
+    public void ToggleRelatedArt()
+    {
+        showRelated = !showRelated;
+
+        if (showRelated)
+        {
+            ShowRelatedArtwork();
+        }
+        else
+        {
+            HideRelatedArtwork();
+        }
+    }
+
+    void ShowRelatedArtwork()
+    {
+        showRelated = true;
+
+        if(relatedArtObjects.Length <= 0) { Debug.LogError($"{this.name} is missing related artworks");  return; }
+
+        for (int i= 0; i < relatedArtObjects.Length; i++)
+        {
+            GameObject link = Instantiate(relatedArtLink, transform);
+            LineRenderer linkRenderer = link.GetComponent<LineRenderer>();
+
+            linkRenderer.SetPosition(0, transform.position);
+            linkRenderer.SetPosition(1, relatedArtObjects[i].transform.position);
+            artLinks.Add(link);
+        }
+    }
+
+    void HideRelatedArtwork()
+    {
+        showRelated = false;
+        foreach (GameObject aLink in artLinks)
+        {
+            Destroy(aLink);
+        }
+        artLinks.Clear();
+    }
+
+    #endregion
 
     #region Collider Trigger Events
     private void OnTriggerEnter(Collider other)
@@ -62,6 +132,7 @@ public class ArtObject : MonoBehaviour
         {
             artBorder.material = hightlightedBorderMat;
             ShowInfoButton();
+            ShowRelatedArtButton();
         }
     }
 
@@ -81,6 +152,8 @@ public class ArtObject : MonoBehaviour
             artBorder.material = normalBorderMat;
             HideInfoButton();
             HideInfoPanel();
+            HideRelatedArtButton();
+            HideRelatedArtwork();
         }
     }
     #endregion Collider Trigger Events
