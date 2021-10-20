@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArtObject : MonoBehaviour
 {
     [Header("Art Border")]
-    [SerializeField] MeshRenderer artBorder;
+    [SerializeField] MeshRenderer[] artBorders;
     [SerializeField] Material normalBorderMat;
     [SerializeField] Material hightlightedBorderMat;
 
@@ -32,7 +32,10 @@ public class ArtObject : MonoBehaviour
         showPanel = infoPanel.activeSelf;
         showRelated = relatedArtButton.activeSelf;
 
-        artBorder.material = normalBorderMat;
+        for (int i = 0; i < artBorders.Length; i++)
+        {
+            artBorders[i].material = normalBorderMat;
+        }
     }
 
 
@@ -134,7 +137,12 @@ public class ArtObject : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            artBorder.material = hightlightedBorderMat;
+            for (int i = 0; i < artBorders.Length; i++)
+            {
+                artBorders[i].material = hightlightedBorderMat;
+            }
+
+
             ShowInfoButton();
             ShowRelatedArtButton();
         }
@@ -153,7 +161,11 @@ public class ArtObject : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            artBorder.material = normalBorderMat;
+            for (int i = 0; i < artBorders.Length; i++)
+            {
+                artBorders[i].material = normalBorderMat;
+            }
+
             HideInfoButton();
             HideInfoPanel();
             HideRelatedArtButton();
