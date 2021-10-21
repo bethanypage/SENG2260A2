@@ -5,7 +5,8 @@ using UnityEngine;
 public class Panel : MonoBehaviour
 {
     //public string panelName;
-    public bool isActive;
+    [HideInInspector] public bool isActive;
+    public bool activeByDefault = false;
 
     public void SetActive(bool setActive)
     {

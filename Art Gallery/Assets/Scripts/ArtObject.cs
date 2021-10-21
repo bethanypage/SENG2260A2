@@ -11,11 +11,10 @@ public class ArtObject : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] GameObject infoPanel;
-    [SerializeField] GameObject infoButton;
-    [SerializeField] GameObject relatedArtButton;
+    [SerializeField] GameObject buttonPanel;
     bool showPanel;
 
-    [Header("Related Artkworks")]
+    [Header("Related Artworks")]
     [SerializeField] GameObject[] relatedArtObjects;
     [SerializeField] GameObject relatedArtLink;
     bool showRelated;
@@ -25,12 +24,10 @@ public class ArtObject : MonoBehaviour
 
     private void Awake()
     {
-        HideInfoButton();
-        HideInfoPanel();
-        HideRelatedArtButton();
+        HideButtonPanel();
+        HideInfoPanel();       
 
         showPanel = infoPanel.activeSelf;
-        showRelated = relatedArtButton.activeSelf;
 
         for (int i = 0; i < artBorders.Length; i++)
         {
@@ -39,17 +36,17 @@ public class ArtObject : MonoBehaviour
     }
 
 
-    #region InfoButton
-    void ShowInfoButton()
+    #region ButtonPanel
+    void ShowButtonPanel()
     {
-        infoButton.SetActive(true);
+        buttonPanel.SetActive(true);
     }
 
-    void HideInfoButton()
+    void HideButtonPanel()
     {
-        infoButton.SetActive(false);
+        buttonPanel.SetActive(false);
     }
-    #endregion InfoButton
+    #endregion ButtonPanel
 
     #region InfoPanel
     public void ToggleInfoPanel()
@@ -72,19 +69,6 @@ public class ArtObject : MonoBehaviour
         infoPanel.SetActive(false);
     }
     #endregion InfoPanel
-
-    #region RelatedArtButton
-    void ShowRelatedArtButton()
-    {
-        relatedArtButton.SetActive(true);
-    }
-
-    void HideRelatedArtButton()
-    {
-        relatedArtButton.SetActive(false);
-    }
-
-    #endregion RelatedArtButton
 
     #region RelatedArt
     public void ToggleRelatedArt()
@@ -143,8 +127,7 @@ public class ArtObject : MonoBehaviour
             }
 
 
-            ShowInfoButton();
-            ShowRelatedArtButton();
+            ShowButtonPanel();
         }
     }
 
@@ -166,9 +149,8 @@ public class ArtObject : MonoBehaviour
                 artBorders[i].material = normalBorderMat;
             }
 
-            HideInfoButton();
             HideInfoPanel();
-            HideRelatedArtButton();
+            HideButtonPanel();
             HideRelatedArtwork();
         }
     }

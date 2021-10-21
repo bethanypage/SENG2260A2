@@ -7,11 +7,6 @@ public class UIButtonHandler : MonoBehaviour
     void Start()
     {
         panels = GetComponentsInChildren<Panel>();
-
-        foreach(Panel panel in panels)
-        {
-            panel.SetActive(false);
-        }
     }
 
     public void TogglePanel(Panel panel)
